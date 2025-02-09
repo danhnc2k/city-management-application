@@ -23,6 +23,8 @@ A simple application to organize and manage data for a city, related to electric
   - Store all data in Postgres database
 - Testing:
   - All the Backend logic code were covered by Unit testing
+  ![image](https://github.com/user-attachments/assets/bc0ca939-9a4e-4352-8723-e09edffba254)
+
 
 ## Architecture
 ### Frontend
