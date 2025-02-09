@@ -1,0 +1,19 @@
+{
+  "name": "Sydney",
+  "state": "New South Wales",
+  "country": "Australia",
+  "wasteCollectors": [
+    {
+      "name": "WasteX",
+      "email": "info@wastex.com",
+      "wasteCollections": [
+        {
+          "collectedAmount": 1200,
+          "unit": "tons",
+          "collectedOn": "2024-02-08",
+          "wasteType": "Recyclable"
+        }
+      ]
+    }
+  ]
+}
