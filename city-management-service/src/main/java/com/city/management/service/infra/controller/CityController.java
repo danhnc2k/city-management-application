@@ -36,11 +36,11 @@ public class CityController {
   }
 
   @PostMapping("/v1/city/create")
-  public ResponseEntity<String> updateCity(@RequestHeader(name = CORRELATION_ID_HEADER, required = false) String correlationId,
-                                         @RequestBody City cityRequest) {
+  public ResponseEntity<String> createCity(@RequestHeader(name = CORRELATION_ID_HEADER, required = false) String correlationId,
+                                           @RequestBody City cityRequest) {
     MDC.put(CORRELATION_ID_HEADER, correlationId);
     CityService cityService = cityDataSourcingStrategy.getCityService(CityDataSourcingStrategyEnum.INTERNAL);
-    String cityId = cityService.saveCity(cityRequest);
+    String cityId = cityService.saveCityData(cityRequest);
     String message = String.format("Successfully save city data cityId=%s", cityId);
     return ResponseEntity.ok(message);
   }

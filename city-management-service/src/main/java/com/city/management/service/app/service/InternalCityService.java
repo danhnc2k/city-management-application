@@ -38,7 +38,7 @@ public class InternalCityService implements CityService {
   }
 
   @Override
-  public String saveCity(City cityRequest) {
+  public String saveCityData(City cityRequest) {
     try {
       CityEntity cityEntity = cityDataMapper.mapCityRequest(cityRequest);
       cityRepository.save(List.of(cityEntity));

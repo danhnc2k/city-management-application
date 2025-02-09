@@ -10,5 +10,5 @@ public interface CityService {
 
   City getCityData(String cityId);
 
-  String saveCity(City cityRequest);
+  String saveCityData(City cityRequest);
 }
