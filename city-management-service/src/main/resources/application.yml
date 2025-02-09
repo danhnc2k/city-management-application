@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /city-management-service
+
+
+spring:
+  application:
+    name: city-management-service
+  datasource:
+    host: localhost
+    port: 5432
+    dbname: postgres
+    url: jdbc:postgresql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.dbname}
+    username: postgres
+    password: admin
+    driverClassName: org.postgresql.Driver
+    hikari:
+      pool-name: SpringBootJPAHikariPool
