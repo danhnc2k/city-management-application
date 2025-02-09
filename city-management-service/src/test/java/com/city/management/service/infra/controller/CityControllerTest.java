@@ -4,6 +4,7 @@ import com.city.management.service.app.service.CityDataSourcingStrategy;
 import com.city.management.service.app.service.CityService;
 import com.city.management.service.domain.model.City;
 import com.city.management.service.domain.model.CityDataSourcingStrategyEnum;
+import com.city.management.service.domain.model.CreateCityResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -52,13 +53,16 @@ public class CityControllerTest {
   @Test
   void createCity_shouldReturnCityData_whenReceiveCityId() {
     City mockCityRequest = new City();
+    CreateCityResponse mockResponse = CreateCityResponse.builder()
+        .cityId(CITY_ID)
+        .build();
 
     when(cityDataSourcingStrategy.getCityService(CityDataSourcingStrategyEnum.INTERNAL)).thenReturn(cityService);
-    when(cityService.saveCityData(mockCityRequest)).thenReturn(CITY_ID);
+    when(cityService.saveCityData(mockCityRequest)).thenReturn(mockResponse);
 
-    ResponseEntity<String> response = cityController.createCity("correlation-id", mockCityRequest);
+    ResponseEntity<CreateCityResponse> response = cityController.createCity("correlation-id", mockCityRequest);
 
     assertNotNull(response.getBody());
-    assertTrue(response.getBody().contains("Successfully save city data cityId"));
+    assertEquals(CITY_ID, response.getBody().getCityId());
   }
 }

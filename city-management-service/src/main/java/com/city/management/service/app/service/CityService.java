@@ -3,6 +3,7 @@ package com.city.management.service.app.service;
 
 import com.city.management.service.domain.model.City;
 import com.city.management.service.domain.model.CityDataSourcingStrategyEnum;
+import com.city.management.service.domain.model.CreateCityResponse;
 
 public interface CityService {
 
@@ -10,5 +11,5 @@ public interface CityService {
 
   City getCityData(String cityId);
 
-  String saveCityData(City cityRequest);
+  CreateCityResponse saveCityData(City cityRequest);
 }

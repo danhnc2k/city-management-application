@@ -10,7 +10,6 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,6 +31,6 @@ public class ExternalCityServiceTest {
 
   @Test
   void saveCityData_shouldReturnEmptyString() {
-    assertEquals("", externalCityService.saveCityData(new City()));
+    assertNull(externalCityService.saveCityData(new City()));
   }
 }

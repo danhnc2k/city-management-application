@@ -7,6 +7,7 @@ import com.city.management.service.domain.mapper.CityDataMapper;
 import com.city.management.service.domain.model.City;
 import com.city.management.service.app.facet.repository.CityRepository;
 import com.city.management.service.domain.model.CityDataSourcingStrategyEnum;
+import com.city.management.service.domain.model.CreateCityResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,11 +39,13 @@ public class InternalCityService implements CityService {
   }
 
   @Override
-  public String saveCityData(City cityRequest) {
+  public CreateCityResponse saveCityData(City cityRequest) {
     try {
       CityEntity cityEntity = cityDataMapper.mapCityRequest(cityRequest);
       cityRepository.save(List.of(cityEntity));
-      return cityEntity.getId();
+      return CreateCityResponse.builder()
+          .cityId(cityEntity.getId())
+          .build();
     } catch (Exception ex) {
       log.error("[{}:{}] Error while saving city data", Constants.TECHNICAL_ERROR_TYPE, Constants.SAVE_CITY_ERROR_CODE);
       throw new ServiceException("Cannot save city data", Constants.SAVE_CITY_ERROR_CODE);
