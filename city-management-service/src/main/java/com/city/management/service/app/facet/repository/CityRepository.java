@@ -1,4 +1,4 @@
-package com.city.management.service.domain.repository;
+package com.city.management.service.app.facet.repository;
 
 import com.city.management.service.domain.entity.CityEntity;
 

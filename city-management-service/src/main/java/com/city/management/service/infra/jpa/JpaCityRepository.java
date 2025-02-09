@@ -1,7 +1,7 @@
 package com.city.management.service.infra.jpa;
 
 import com.city.management.service.domain.entity.CityEntity;
-import com.city.management.service.domain.repository.CityRepository;
+import com.city.management.service.app.facet.repository.CityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -17,3 +17,9 @@ spring:
     driverClassName: org.postgresql.Driver
     hikari:
       pool-name: SpringBootJPAHikariPool
+  cloud:
+    openfeign:
+      client:
+        config:
+          externalService:
+            url: http://remote-service.com

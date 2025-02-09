@@ -8,4 +8,5 @@ public class Constants {
   public static final String BUSINESS_ERROR_TYPE = "B";
   public static final String INTERNAL_ERROR_CODE = "E500";
   public static final String ENTITY_NOT_FOUND_ERROR_CODE = "E001";
+  public static final String SAVE_CITY_ERROR_CODE = "E002";
 }

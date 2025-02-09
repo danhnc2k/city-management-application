@@ -1,8 +1,10 @@
 package com.city.management.service.infra.controller;
 
-import com.city.management.service.app.CityService;
+import com.city.management.service.app.service.CityDataSourcingStrategy;
+import com.city.management.service.app.service.CityService;
 import com.city.management.service.domain.constant.Constants;
 import com.city.management.service.domain.model.City;
+import com.city.management.service.domain.model.CityDataSourcingStrategyEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
@@ -21,14 +23,15 @@ import static com.city.management.service.domain.constant.Constants.CORRELATION_
 @RequiredArgsConstructor
 @Slf4j
 public class CityController {
-  private final CityService cityService;
+  private final CityDataSourcingStrategy cityDataSourcingStrategy;
 
   @GetMapping("/v1/city/retrieve")
   public ResponseEntity<City> getCity(@RequestParam final MultiValueMap<String, String> queryParams,
                                       @RequestHeader(name = CORRELATION_ID_HEADER, required = false) String correlationId) {
     MDC.put(CORRELATION_ID_HEADER, correlationId);
     String cityId = queryParams.getFirst(Constants.CITY_ID_PARAM);
-    City city = cityService.getCityById(cityId);
+    CityService cityService = cityDataSourcingStrategy.getCityService(CityDataSourcingStrategyEnum.INTERNAL);
+    City city = cityService.getCityData(cityId);
     return ResponseEntity.ok(city);
   }
 
@@ -36,6 +39,7 @@ public class CityController {
   public ResponseEntity<String> updateCity(@RequestHeader(name = CORRELATION_ID_HEADER, required = false) String correlationId,
                                          @RequestBody City cityRequest) {
     MDC.put(CORRELATION_ID_HEADER, correlationId);
+    CityService cityService = cityDataSourcingStrategy.getCityService(CityDataSourcingStrategyEnum.INTERNAL);
     String cityId = cityService.saveCity(cityRequest);
     String message = String.format("Successfully save city data cityId=%s", cityId);
     return ResponseEntity.ok(message);
