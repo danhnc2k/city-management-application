@@ -1,72 +1,106 @@
 import {
   Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
+  Grid2 as Grid,
   Container,
   FormControl,
   InputLabel,
-  MenuItem,
   Select,
   SelectChangeEvent,
   Typography,
+  MenuItem,
+  Button,
 } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+type City = {
+  id: string;
+  name: string;
+};
 
 export const Home = () => {
-  const [city, setCity] = useState<string>("Ha Noi");
-  const [cities, setCities] = useState<string[]>([
-    "Ho Chi Minh",
-    "Ha Noi",
-    "Hue",
+  const [city, setCity] = useState<string>("");
+  const [cities, setCities] = useState<City[]>([
+    {
+      name: "Hanoi",
+      id: "hn",
+    },
+    {
+      name: "Ho Chi Minh",
+      id: "hcm",
+    },
+    {
+      name: "Hue",
+      id: "hue",
+    },
   ]);
+
+  const navigate = useNavigate();
 
   const handleChange = (event: SelectChangeEvent) => {
     setCity(event.target.value);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    alert(city);
+    navigate("/result");
+  };
 
   return (
-    <Card sx={{ maxWidth: 900, margin: "30px auto", border: "1px solid #356" }}>
-      <CardHeader>Login</CardHeader>
-      <CardContent>
-        <Container maxWidth="xs">
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            sx={{ mt: 4, display: "flex", flexDirection: "column", gap: 2 }}
-          >
-            <Typography variant="h5" component="h1" align="center">
-              Enter City Data
+    <Grid container alignItems="center" minHeight={"90vh"}>
+      <Grid size={6}>
+        <img
+          src="https://www.telefonica.com/en/wp-content/uploads/sites/5/2024/01/pexels-photo-1108572-e1706694279617.jpeg"
+          style={{ width: "-webkit-fill-available" }}
+        />
+      </Grid>
+      <Grid size={6}>
+        <Container>
+          <Box sx={{ mt: 4, display: "flex", flexDirection: "column", gap: 1 }}>
+            <Typography
+              variant="h3"
+              component="h3"
+              align="center"
+              fontWeight="bold"
+            >
+              City Data Management
             </Typography>
-
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">City</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={city}
-                label="Age"
-                onChange={handleChange}
+            <Typography
+              variant="h6"
+              component="h6"
+              align="center"
+              fontWeight="light"
+            >
+              Choose a city
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <Box
+                sx={{ mt: 4, display: "flex", flexDirection: "column", gap: 2 }}
               >
-                {!!cities &&
-                  cities.map((city) => (
-                    <MenuItem value={city}>{city}</MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
+                <FormControl fullWidth required>
+                  <InputLabel id="city-dropdown">City</InputLabel>
+                  <Select
+                    labelId="city-dropdown-label"
+                    id="city-dropdown"
+                    value={city}
+                    label="City"
+                    onChange={handleChange}
+                  >
+                    {(cities || []).map((city: City) => (
+                      <MenuItem key={city.id} value={city.id}>
+                        {city.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <Button variant="contained" color="primary" type="submit">
+                  Submit
+                </Button>
+              </Box>
+            </form>
           </Box>
         </Container>
-      </CardContent>
-      <CardActions>
-        <Button type="submit" variant="contained" color="primary">
-          Submit
-        </Button>
-      </CardActions>
-    </Card>
+      </Grid>
+    </Grid>
   );
 };

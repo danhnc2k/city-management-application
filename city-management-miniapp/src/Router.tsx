@@ -1,17 +1,15 @@
-import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home";
+import { Result } from "./pages/Result";
 
-type RouterProps = {
-  currentPath: string;
-};
-
-const Router = ({ currentPath }: RouterProps) => {
+const Router = () => {
   return (
-    <MemoryRouter initialEntries={[currentPath]}>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="result" element={<Result />} />
+        <Route path="/" element={<Home />}></Route>
       </Routes>
-    </MemoryRouter>
+    </BrowserRouter>
   );
 };
 
