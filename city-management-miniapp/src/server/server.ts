@@ -10,10 +10,10 @@ const apiClient = axios.create({
 });
 
 export interface City {
-  id: string;
+  id?: string;
   name: string;
-  state: string;
-  country: string;
+  state?: string;
+  country?: string;
   wasteCollectors: WasteCollector[];
 }
 

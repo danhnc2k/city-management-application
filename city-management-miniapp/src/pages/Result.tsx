@@ -1,69 +1,30 @@
 import {
   Box,
-  Button,
   Container,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Grid2 as Grid,
-  Radio,
-  RadioGroup,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableHead,
-  TextField,
   Typography,
 } from "@mui/material";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Data, WasteType } from "../types";
 import { StyledTableCell, StyledTableRow } from "../styles";
 import { WasteTypeColorMapping, headCells } from "../constants";
-
-const samples = {
-  name: "Sydney",
-  state: "New South Wales",
-  country: "Australia",
-  wasteCollectors: [
-    {
-      name: "WasteX",
-      email: "info@wastex.com",
-      wasteCollections: [
-        {
-          collectedAmount: 1200,
-          unit: "tons",
-          collectedOn: "2024-02-08",
-          wasteType: "Recyclable",
-        },
-      ],
-    },
-    {
-      name: "WasteY",
-      email: "info@wastex.com",
-      wasteCollections: [
-        {
-          collectedAmount: 1200,
-          unit: "tons",
-          collectedOn: "2024-02-08",
-          wasteType: "Non-recyclable",
-        },
-
-        {
-          collectedAmount: 100,
-          unit: "tons",
-          collectedOn: "2024-02-08",
-          wasteType: "Hazardous",
-        },
-      ],
-    },
-  ],
-};
+import { fetchCityData, WasteCollector } from "../server/server";
 
 export const Result = () => {
   const { cityId } = useParams();
-  const wasteCollectors = samples.wasteCollectors;
+  const [wasteCollectors, setWasteCollectors] = useState<WasteCollector[]>([]);
+
+  useEffect(() => {
+    fetchCityData(cityId || "")
+      .then((response) => {
+        setWasteCollectors(response.wasteCollectors);
+      })
+      .catch((error) => console.error("Failed to fetch:", error));
+  }, []);
 
   const getWasteCollectionFromCollector = useCallback(
     (collector: string) => {
@@ -86,28 +47,32 @@ export const Result = () => {
                 ))}
               </StyledTableRow>
             </TableHead>
-            {collection?.map((data: Data) => (
-              <TableBody>
-                {headCells.map((headCell) => (
-                  <StyledTableCell
-                    key={headCell.id}
-                    align={headCell.numeric ? "right" : "left"}
-                    padding={"normal"}
-                  >
-                    <p
-                      style={{
-                        color:
-                          headCell.id === "wasteType"
-                            ? WasteTypeColorMapping[data.wasteType as WasteType]
-                            : "black",
-                      }}
+            <TableBody>
+              {collection?.map((data: Data) => (
+                <StyledTableRow>
+                  {headCells.map((headCell) => (
+                    <StyledTableCell
+                      key={headCell.id}
+                      align={headCell.numeric ? "right" : "left"}
+                      padding={"normal"}
                     >
-                      {data[headCell.id]}
-                    </p>
-                  </StyledTableCell>
-                ))}
-              </TableBody>
-            ))}
+                      <p
+                        style={{
+                          color:
+                            headCell.id === "wasteType"
+                              ? WasteTypeColorMapping[
+                                  data.wasteType as WasteType
+                                ]
+                              : "black",
+                        }}
+                      >
+                        {data[headCell.id]}
+                      </p>
+                    </StyledTableCell>
+                  ))}
+                </StyledTableRow>
+              ))}
+            </TableBody>
           </Table>
         </TableContainer>
       );
@@ -126,69 +91,6 @@ export const Result = () => {
             <Typography style={{ fontSize: "1rem" }} align="center" mb="1.5rem">
               {collector.email}
             </Typography>
-            <Box sx={{ display: "flex", flexWrap: "wrap" }} mb="1rem">
-              <div>
-                <FormControl>
-                  <FormLabel id="waste-type-label">Type</FormLabel>
-                  <RadioGroup
-                    row
-                    aria-labelledby="waste-type-label"
-                    name="row-radio-buttons-group"
-                  >
-                    <FormControlLabel
-                      value="recyclable"
-                      control={<Radio />}
-                      label="Recyclable"
-                    />
-                    <FormControlLabel
-                      value="nỏnecyclable"
-                      control={<Radio />}
-                      label="Non-recyclable"
-                    />
-                    <FormControlLabel
-                      value="hazardous"
-                      control={<Radio />}
-                      label="Hazardous"
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </div>
-              <div>
-                <FormControl required>
-                  <TextField
-                    label="Amount"
-                    id="waste-amount"
-                    sx={{ m: 1, width: "25ch" }}
-                  />
-                </FormControl>
-              </div>
-              <div>
-                <FormControl required>
-                  <TextField
-                    label="Unit"
-                    id="waste-unit"
-                    sx={{ m: 1, width: "25ch" }}
-                    value="Tons"
-                    slotProps={{
-                      input: {
-                        readOnly: true,
-                      },
-                    }}
-                  />
-                </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <Button variant="text" color="secondary" type="submit">
-                  Add
-                </Button>
-              </div>
-            </Box>
-
             {getWasteCollectionFromCollector(collector.name)}
           </Box>
         );
