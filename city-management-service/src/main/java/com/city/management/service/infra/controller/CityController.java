@@ -5,6 +5,7 @@ import com.city.management.service.app.service.CityService;
 import com.city.management.service.domain.constant.Constants;
 import com.city.management.service.domain.model.City;
 import com.city.management.service.domain.model.CityDataSourcingStrategyEnum;
+import com.city.management.service.domain.model.CreateCityResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
@@ -36,12 +37,11 @@ public class CityController {
   }
 
   @PostMapping("/v1/city/create")
-  public ResponseEntity<String> createCity(@RequestHeader(name = CORRELATION_ID_HEADER, required = false) String correlationId,
-                                           @RequestBody City cityRequest) {
+  public ResponseEntity<CreateCityResponse> createCity(@RequestHeader(name = CORRELATION_ID_HEADER, required = false) String correlationId,
+                                                       @RequestBody City cityRequest) {
     MDC.put(CORRELATION_ID_HEADER, correlationId);
     CityService cityService = cityDataSourcingStrategy.getCityService(CityDataSourcingStrategyEnum.INTERNAL);
-    String cityId = cityService.saveCityData(cityRequest);
-    String message = String.format("Successfully save city data cityId=%s", cityId);
-    return ResponseEntity.ok(message);
+    CreateCityResponse response = cityService.saveCityData(cityRequest);
+    return ResponseEntity.ok(response);
   }
 }

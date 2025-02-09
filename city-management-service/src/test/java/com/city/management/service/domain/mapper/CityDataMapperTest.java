@@ -27,7 +27,8 @@ public class CityDataMapperTest {
 
   @Mock
   WasteDataMapper wasteDataMapper;
-  
+
+  private static final String MOCK_ID = "mock-id";
   private static final String MOCK_NAME = "mock-name";
   private static final String MOCK_STATE = "mock-state";
   private static final String MOCK_COUNTRY = "mock-country";
@@ -40,6 +41,7 @@ public class CityDataMapperTest {
     City result = cityDataMapper.mapCityEntityData(createMockCityEntity());
 
     assertThat(result).isNotNull();
+    assertThat(result.getId()).isEqualTo(MOCK_ID);
     assertThat(result.getName()).isEqualTo(MOCK_NAME);
     assertThat(result.getState()).isEqualTo(MOCK_STATE);
     assertThat(result.getCountry()).isEqualTo(MOCK_COUNTRY);
@@ -55,6 +57,7 @@ public class CityDataMapperTest {
     CityEntity result = cityDataMapper.mapCityRequest(createMockCity());
 
     assertThat(result).isNotNull();
+    assertThat(result.getId()).isEqualTo(MOCK_ID);
     assertThat(result.getName()).isEqualTo(MOCK_NAME);
     assertThat(result.getState()).isEqualTo(MOCK_STATE);
     assertThat(result.getCountry()).isEqualTo(MOCK_COUNTRY);
@@ -64,6 +67,7 @@ public class CityDataMapperTest {
 
   private CityEntity createMockCityEntity() {
     CityEntity cityEntity = new CityEntity();
+    cityEntity.setId(MOCK_ID);
     cityEntity.setName(MOCK_NAME);
     cityEntity.setState(MOCK_STATE);
     cityEntity.setCountry(MOCK_COUNTRY);
@@ -73,6 +77,7 @@ public class CityDataMapperTest {
   
   private City createMockCity() {
     return City.builder()
+        .id(MOCK_ID)
         .name(MOCK_NAME)
         .state(MOCK_STATE)
         .country(MOCK_COUNTRY)
