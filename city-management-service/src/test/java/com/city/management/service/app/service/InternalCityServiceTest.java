@@ -6,6 +6,7 @@ import com.city.management.service.domain.exception.ServiceException;
 import com.city.management.service.domain.mapper.CityDataMapper;
 import com.city.management.service.domain.model.City;
 import com.city.management.service.domain.model.CityDataSourcingStrategyEnum;
+import com.city.management.service.domain.model.CreateCityResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -67,8 +68,10 @@ public class InternalCityServiceTest {
     when(cityDataMapper.mapCityRequest(mockCityRequest)).thenReturn(mockCityEntity);
     doNothing().when(cityRepository).save(anyList());
 
-    String result = internalCityService.saveCityData(mockCityRequest);
-    assertThat(result).isEqualTo(CITY_ID);
+    CreateCityResponse result = internalCityService.saveCityData(mockCityRequest);
+
+    assertThat(result).isNotNull();
+    assertThat(result.getCityId()).isEqualTo(CITY_ID);
   }
 
   @Test

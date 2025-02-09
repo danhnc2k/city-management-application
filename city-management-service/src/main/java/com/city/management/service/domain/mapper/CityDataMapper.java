@@ -16,6 +16,7 @@ public class CityDataMapper {
 
   public City mapCityEntityData(CityEntity entity) {
     return City.builder()
+        .id(entity.getId())
         .name(entity.getName())
         .state(entity.getState())
         .country(entity.getCountry())
@@ -28,7 +29,8 @@ public class CityDataMapper {
 
   public CityEntity mapCityRequest(City cityRequest) {
     CityEntity cityEntity = new CityEntity();
-    cityEntity.setId(UUID.randomUUID().toString());
+    String cityId = cityRequest.getId() == null ? UUID.randomUUID().toString() : cityRequest.getId();
+    cityEntity.setId(cityId);
     cityEntity.setName(cityRequest.getName());
     cityEntity.setState(cityRequest.getState());
     cityEntity.setCountry(cityRequest.getCountry());
