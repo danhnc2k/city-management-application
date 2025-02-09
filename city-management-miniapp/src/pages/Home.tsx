@@ -11,7 +11,6 @@ import {
   Button,
 } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 type City = {
   id: string;
@@ -35,15 +34,8 @@ export const Home = () => {
     },
   ]);
 
-  const navigate = useNavigate();
-
   const handleChange = (event: SelectChangeEvent) => {
     setCity(event.target.value);
-  };
-
-  const handleSubmit = () => {
-    alert(city);
-    navigate("/result");
   };
 
   return (
@@ -73,12 +65,12 @@ export const Home = () => {
             >
               Choose a city
             </Typography>
-            <form onSubmit={handleSubmit}>
+            <form action={`/result/${city}`} method="GET">
               <Box
                 sx={{ mt: 4, display: "flex", flexDirection: "column", gap: 2 }}
               >
                 <FormControl fullWidth required>
-                  <InputLabel id="city-dropdown">City</InputLabel>
+                  <InputLabel id="city-dropdown-label">City</InputLabel>
                   <Select
                     labelId="city-dropdown-label"
                     id="city-dropdown"
