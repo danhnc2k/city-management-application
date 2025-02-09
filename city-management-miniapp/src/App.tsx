@@ -1,10 +1,10 @@
 import React from "react";
-import Router from "./Router";
+import Router from "./router/Router";
 
 import "./App.css";
 
 function App() {
-  return <Router currentPath="/" />;
+  return <Router />;
 }
 
 export default App;
