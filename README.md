@@ -14,8 +14,12 @@ A simple application to organize and manage data for a city, related to electric
 ## Features
 
 - Frontend:
+  ![MainPageUI](https://github.com/user-attachments/assets/70ad6d45-94b0-4b98-9ae4-810bbef5d723)
   - UI to input data related to waste collection for a city
+  ![AddCityUI](https://github.com/user-attachments/assets/6b8c2bb1-e65b-4a42-a29e-fe85236a8b98)
   - UI to display waste collection
+  ![ViewWasteCollectorUI](https://github.com/user-attachments/assets/fc1946e6-7eb6-4420-8936-ab45ebb8ab4d)
+
 - Backend:
   - Expose 2 APIs:
     - Create city data: /v1/city/create
@@ -28,7 +32,14 @@ A simple application to organize and manage data for a city, related to electric
 
 ## Architecture
 ### Frontend
-  
+For frontend, currently it's just a very simple UI to display some main functionality, with structure:
+```
+src
+├───components        => common components that can be share between pages
+├───pages             => contains all main pages of application 
+├───router            => define routing of all pages
+└───server            => integrate with microservice APIs
+```
 ### Backend
 #### Design Pattern
 
@@ -86,6 +97,8 @@ This project is now very simple, some of the features that can be enhance in the
 ### Frontend
   - Enhance UI/UX to support more complicated business flow
   - Consider to apply Backend For Frontend architecture to isolate interation between Frontend and Microservice
+  - Update Unit test for all class
+  - Consider set up Cypress testing for end to end flow
 ### Backend
   - Enhance database design to adapt with more complicated real life problem
   - Set up Docker to containerise the service for easily to run and deploy
