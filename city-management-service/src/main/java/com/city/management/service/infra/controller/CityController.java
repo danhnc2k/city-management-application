@@ -31,6 +31,7 @@ public class CityController {
                                       @RequestHeader(name = CORRELATION_ID_HEADER, required = false) String correlationId) {
     MDC.put(CORRELATION_ID_HEADER, correlationId);
     String cityId = queryParams.getFirst(Constants.CITY_ID_PARAM);
+    log.info("Receive retrieve request for cityId={}", cityId);
     CityService cityService = cityDataSourcingStrategy.getCityService(CityDataSourcingStrategyEnum.INTERNAL);
     City city = cityService.getCityData(cityId);
     return ResponseEntity.ok(city);
@@ -40,6 +41,7 @@ public class CityController {
   public ResponseEntity<CreateCityResponse> createCity(@RequestHeader(name = CORRELATION_ID_HEADER, required = false) String correlationId,
                                                        @RequestBody City cityRequest) {
     MDC.put(CORRELATION_ID_HEADER, correlationId);
+    log.info("Receive create request={}", cityRequest);
     CityService cityService = cityDataSourcingStrategy.getCityService(CityDataSourcingStrategyEnum.INTERNAL);
     CreateCityResponse response = cityService.saveCityData(cityRequest);
     return ResponseEntity.ok(response);
