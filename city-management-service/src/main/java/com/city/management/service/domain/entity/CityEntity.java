@@ -29,11 +29,9 @@ public class CityEntity {
   @Column(name = "name")
   private String name;
 
-  @NotNull
   @Column(name = "state")
   private String state;
 
-  @NotNull
   @Column(name = "country")
   private String country;
 
